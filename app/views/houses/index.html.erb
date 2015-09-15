@@ -1,0 +1,89 @@
+<div ng-app="app">
+
+  <div ng-controller="housesCtrl" ng-init="setup()">
+    <ul>
+    <div>
+
+      <datalist id="street_name">
+        <option ng-repeat="house in houses">{{ house.street_address }}</option>
+      </datalist>
+
+      <datalist id="city">
+        <option ng-repeat="house in houses">{{ house.city }}</option>
+      </datalist>
+
+
+      <button ng-click="toggleOrder('city')">Order by name</button>
+      <button ng-click="toggleOrder('street_address')">Order by street address</button>
+    </div>
+      <h3>Search Street Address<input ng-model="streetAddressFilter" list="street_name"></h3>
+      <h3>Search City<input ng-model="streetCity" list="city"></h3>
+
+
+      <button ng-click="sortBy('state')">Order by state</button>
+      <button ng-click="sortBy('city')">Order by City</button>
+      <li ng-repeat="house in houses | filter: { street_address: streetAddressFilter} |
+       orderBy:orderAttribute:descending">
+      <h3>Address: {{ house.street_address }}</h3>
+      <h3>{{ house.city }}, {{ house.state }} {{ house.zip_code }}</h3>
+      <h3>Country: {{ house.country }}</h3>
+      <a href="#" ng-click-"deleteHouse()">Delete</a>
+      <hr>
+      </li>
+    </ul>
+    <ul id="errors">
+      <li ng-repeat="error in errors">{{ error }}</li>
+    </ul>
+    <div>
+      Street Address: <input ng-model="newHouseStreetAddress">
+      City: <input ng-model="newHouseCity">
+      State: <input ng-model="newHouseState">
+      Zip Code: <input ng-model="newHouseZipCode">
+      Country: <input ng-model="newHouseCountry">
+    
+      <button ng-click="addHouse(newHouseStreetAddress, newHouseCity, newHouseState, newHouseZipCode, newHouseCountry)">Add House</button>
+    </div>
+    <br><br>
+
+
+<table style="width:50%">
+  <tr>
+    <th ng-click="toggleOrder('street_address')">Street Address</th>
+    <th ng-click="toggleOrder('city')">City</th>
+    <th ng-click="toggleOrder('state')">State</th>
+    <th ng-click="toggleOrder('zip_code')">Zip Code</th>
+    <th ng-click="toggleOrder('country')">Country</th>
+  </tr>
+  <tr ng-repeat="house in houses | orderBy:orderAttribute:descending">
+    <td>{{ house.street_address }}</td>
+    <td>{{ house.city }}</td>    
+    <td>{{ house.state }}</td>
+    <td>{{ house.zip_code }}</td>
+    <td>{{ house.country }}</td>
+  </tr>
+</table>
+
+
+
+
+
+  </div>
+
+</div>
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+</style>
+<br><br>
+
+
+
+
+
